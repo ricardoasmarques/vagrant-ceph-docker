@@ -36,7 +36,7 @@ Just run `vagrant up` and wait a few minutes.
 ## Deploying a Ceph cluster using the docker images
 
 SSH into the VM `node1` like this `vagrant ssh node1`.
-Inside the VM there are bash script to deploy and undeploy a Ceph cluster.
+Inside the VM there are some bash scripts to deploy and undeploy a Ceph cluster.
 
 The `deploy_cluster.sh` script will deploy 3 monitors, 3 OSDs, 1 MDS in node1, and 1 RGW in node1.
 
@@ -44,7 +44,7 @@ The `undeploy_cluster.sh` will delete all the containers and reset the shared di
 
 ## Issuing commands to the Ceph cluster
 
-After deploying a Ceph cluster, you can issue commands to the cluster using the `run_ceph_cmd.sh`.
+After deploying a Ceph cluster, you can issue commands to the cluster using the `run_ceph_cmd.sh` script.
 
 Example:
 `./run_ceph_cmd.sh ceph -s`
