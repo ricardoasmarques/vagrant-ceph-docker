@@ -4,12 +4,12 @@ ceph_docker_ceph_version: jewel
 ceph_docker_distro: opensuse
 ceph_docker_distro_version: Leap_42.2
 
-#libvirt_host: IP
-#libvirt_user: USER
+#libvirt_host: @ip_address@
+#libvirt_user: @user_name@
 #libvirt_use_ssl: true
 
 vm_memory: 4096
 vm_cpus: 2
-vm_storage_pool: vagrant
+vm_storage_pool: default
 vm_num_volumes: 2
 vm_volume_size: 8G
