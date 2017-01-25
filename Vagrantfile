@@ -44,7 +44,6 @@ Vagrant.configure("2") do |config|
                   settings['vm_volume_size'] : '8G'
     (1..num_volumes).each do |d|
       lv.storage :file, size: volume_size, type: 'raw'
-      lv.storage :file, size: volume_size, type: 'raw'
     end
 
   end
