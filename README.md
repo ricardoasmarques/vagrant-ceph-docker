@@ -38,7 +38,7 @@ Just run `vagrant up` and wait a few minutes.
 SSH into the VM `node1` like this `vagrant ssh node1`.
 Inside the VM there are some bash scripts to deploy and undeploy a Ceph cluster.
 
-The `deploy_cluster.sh` script will deploy 3 monitors, 3 OSDs, 1 MDS in node1, and 1 RGW in node1.
+The `deploy_cluster.sh` script will deploy 3 monitors, 3 OSDs, 1 MDS in node2, and 1 RGW in node1.
 
 The `undeploy_cluster.sh` will delete all the containers and reset the shared directories used by the Ceph daemons.
 

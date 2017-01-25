@@ -105,12 +105,15 @@ fi
 if [[ "$1" == "mds" || "$1" == "" ]]; then
 docker run -d --net=host -v /etc/ceph/:/etc/ceph/ \
            -v /var/lib/ceph/:/var/lib/ceph/ \
+           -e CEPHFS_CREATE=1 \
            ceph/daemon mds
 fi
 
 if [[ "$1" == "rgw" || "$1" == "" ]]; then
+ssh node2 <<HERE
 docker run -d --net=host -v /etc/ceph/:/etc/ceph/ \
            -v /var/lib/ceph/:/var/lib/ceph/ \
            ceph/daemon rgw
+HERE
 fi
 
