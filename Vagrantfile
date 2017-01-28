@@ -74,6 +74,7 @@ Vagrant.configure("2") do |config|
       cat /home/vagrant/.ssh/id_rsa.pub >> /home/vagrant/.ssh/authorized_keys
       mkdir /root/.ssh
       cp /home/vagrant/.ssh/id_rsa* /root/.ssh/
+      chmod 600 /root/.ssh/id_rsa 
       cat /root/.ssh/id_rsa.pub >> /root/.ssh/authorized_keys
 
       sed -i -e 's!@CEPH_DOCKER_REPO@!#{ceph_docker_repo}!g' \
@@ -140,6 +141,7 @@ Vagrant.configure("2") do |config|
       cat /home/vagrant/.ssh/id_rsa.pub >> /home/vagrant/.ssh/authorized_keys
       mkdir /root/.ssh
       cp /home/vagrant/.ssh/id_rsa* /root/.ssh/
+      chmod 600 /root/.ssh/id_rsa 
       cat /root/.ssh/id_rsa.pub >> /root/.ssh/authorized_keys
 
       ssh-keyscan -H node1 >> ~/.ssh/known_hosts
@@ -168,6 +170,7 @@ Vagrant.configure("2") do |config|
       cat /home/vagrant/.ssh/id_rsa.pub >> /home/vagrant/.ssh/authorized_keys
       mkdir /root/.ssh
       cp /home/vagrant/.ssh/id_rsa* /root/.ssh/
+      chmod 600 /root/.ssh/id_rsa 
       cat /root/.ssh/id_rsa.pub >> /root/.ssh/authorized_keys
 
       ssh-keyscan -H node1 >> ~/.ssh/known_hosts
