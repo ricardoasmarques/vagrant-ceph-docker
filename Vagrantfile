@@ -3,6 +3,11 @@
 
 require 'yaml'
 
+raise Vagrant::Errors::VagrantError.new, 
+  "'settings.yml' file not found.\n\n" \
+  "Please define your 'settings.yml'. " \
+  "See 'settings.sample.yml' for an example." unless File.exist?("settings.yml")
+
 settings = YAML.load_file('settings.yml')
 
 ceph_docker_repo = settings.has_key?('ceph_docker_repo') ?

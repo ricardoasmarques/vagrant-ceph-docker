@@ -7,7 +7,7 @@ Vagrant will instantiate three VMs using an ubuntu-server-xenial box, and will a
 
 ## Setting up configuration
 
-There is a [`settings.yml`](settings.yml) file that contains all the necessary settings to spin up the cluster, and choose which ceph-docker images flavor to build and test.
+Configuration resides in the `settings.yml` file that contains the custom configuration to spin up the cluster, and choose which ceph-docker images flavor to build and test. See [`settings.sample.yml`](settings.sample.yml) for an example of the `settings.yml` that you must create.
 
 ### Settings options:
 
