@@ -2,7 +2,7 @@
 
 This repo contains the configuration files to test the docker images created in the https://github.com/ceph/ceph-docker project.
 
-Vagrant will instantiate three VMs using an ubuntu-server-xenial box, and will automatically provision the VMs with docker and will build the ceph-docker images of the flavor defined in the settings file.
+Vagrant will instantiate three VMs using an `opensuse/openSUSE-42.1-x86_64`(default) or `yk0/ubuntu-xenial` box, will automatically provision the VMs with docker and will build the ceph-docker images of the flavor defined in the settings file.
 
 
 ## Setting up configuration
@@ -13,6 +13,7 @@ Configuration resides in the `settings.yml` file that contains the custom config
 
 | Option |  Type    | Default
 |----------| ----------| --------|
+| `vagrant_box` | string | `opensuse/openSUSE-42.1-x86_64` |
 | `ceph_docker_repo` | URL | `https://github.com/rjfd/ceph-docker.git`|
 | `ceph_docker_branch` | string | `wip-opensuse-test` |
 | `ceph_docker_ceph_version` | string | `jewel` |
