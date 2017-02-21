@@ -1,3 +1,5 @@
+vagrant_box: opensuse/openSUSE-42.1-x86_64
+
 ceph_docker_repo: https://github.com/rjfd/ceph-docker.git
 ceph_docker_branch: wip-opensuse-test
 ceph_docker_ceph_version: jewel

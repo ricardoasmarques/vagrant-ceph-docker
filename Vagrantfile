@@ -10,6 +10,9 @@ raise Vagrant::Errors::VagrantError.new,
 
 settings = YAML.load_file('settings.yml')
 
+vagrant_box = settings.has_key?('vagrant_box') ?
+                     settings['vagrant_box'] : "opensuse/openSUSE-42.1-x86_64"
+
 ceph_docker_repo = settings.has_key?('ceph_docker_repo') ?
                    settings['ceph_docker_repo'] :
                    "https://github.com/rjfd/ceph-docker.git"
@@ -24,7 +27,7 @@ ceph_docker_distro_version = settings.has_key?('ceph_docker_distro_version') ?
                      settings['ceph_docker_distro_version'] : "Leap_42.2"
 
 Vagrant.configure("2") do |config|
-  config.vm.box = "yk0/ubuntu-xenial"
+  config.vm.box = vagrant_box
 
   config.vm.provider "libvirt" do |lv|
     if settings.has_key?('libvirt_host') then
@@ -71,6 +74,8 @@ Vagrant.configure("2") do |config|
                               destination:"rebuild_docker_images.sh"
     node.vm.provision "file", source: "scripts/rgw_test.sh",
                               destination:"rgw_test.sh"
+    node.vm.provision "file", source: "scripts/install_docker.sh",
+                              destination:"install_docker.sh"
 
     node.vm.provision "shell", inline: <<-SHELL
       echo "192.168.100.201 node1" >> /etc/hosts
@@ -78,9 +83,8 @@ Vagrant.configure("2") do |config|
       echo "192.168.100.203 node3" >> /etc/hosts
       cat /home/vagrant/.ssh/id_rsa.pub >> /home/vagrant/.ssh/authorized_keys
       mkdir /root/.ssh
-      cp /home/vagrant/.ssh/id_rsa* /root/.ssh/
-      chmod 600 /root/.ssh/id_rsa
       chmod 600 /home/vagrant/.ssh/id_rsa
+      cp /home/vagrant/.ssh/id_rsa* /root/.ssh/
       cat /root/.ssh/id_rsa.pub >> /root/.ssh/authorized_keys
 
       sed -i -e 's!@CEPH_DOCKER_REPO@!#{ceph_docker_repo}!g' \
@@ -91,8 +95,10 @@ Vagrant.configure("2") do |config|
              rebuild_docker_images.sh
 
       apt-get update
-      apt-get install -y docker.io pv
+      ./install_docker.sh
+      apt-get install -y pv
       gpasswd -a vagrant docker
+      sudo systemctl enable docker
       sudo systemctl restart docker
       cd /home/vagrant
       git clone #{ceph_docker_repo}
@@ -139,6 +145,8 @@ Vagrant.configure("2") do |config|
                               destination:".ssh/id_rsa"
     node.vm.provision "file", source: "keys/id_rsa.pub",
                               destination:".ssh/id_rsa.pub"
+    node.vm.provision "file", source: "scripts/install_docker.sh",
+                              destination:"install_docker.sh"
 
     node.vm.provision "shell", inline: <<-SHELL
       echo "192.168.100.201 node1" >> /etc/hosts
@@ -146,16 +154,16 @@ Vagrant.configure("2") do |config|
       echo "192.168.100.203 node3" >> /etc/hosts
       cat /home/vagrant/.ssh/id_rsa.pub >> /home/vagrant/.ssh/authorized_keys
       mkdir /root/.ssh
-      cp /home/vagrant/.ssh/id_rsa* /root/.ssh/
-      chmod 600 /root/.ssh/id_rsa
       chmod 600 /home/vagrant/.ssh/id_rsa
+      cp /home/vagrant/.ssh/id_rsa* /root/.ssh/
       cat /root/.ssh/id_rsa.pub >> /root/.ssh/authorized_keys
 
       ssh-keyscan -H node1 >> ~/.ssh/known_hosts
       ssh-keyscan -H node3 >> ~/.ssh/known_hosts
       apt-get update
-      apt-get install -y docker.io
+      ./install_docker.sh
       gpasswd -a vagrant docker
+      sudo systemctl enable docker
       sudo systemctl restart docker
       touch /tmp/ready
     SHELL
@@ -169,6 +177,8 @@ Vagrant.configure("2") do |config|
                               destination:".ssh/id_rsa"
     node.vm.provision "file", source: "keys/id_rsa.pub",
                               destination:".ssh/id_rsa.pub"
+    node.vm.provision "file", source: "scripts/install_docker.sh",
+                              destination:"install_docker.sh"
 
     node.vm.provision "shell", inline: <<-SHELL
       echo "192.168.100.201 node1" >> /etc/hosts
@@ -176,16 +186,16 @@ Vagrant.configure("2") do |config|
       echo "192.168.100.203 node3" >> /etc/hosts
       cat /home/vagrant/.ssh/id_rsa.pub >> /home/vagrant/.ssh/authorized_keys
       mkdir /root/.ssh
-      cp /home/vagrant/.ssh/id_rsa* /root/.ssh/
-      chmod 600 /root/.ssh/id_rsa
       chmod 600 /home/vagrant/.ssh/id_rsa
+      cp /home/vagrant/.ssh/id_rsa* /root/.ssh/
       cat /root/.ssh/id_rsa.pub >> /root/.ssh/authorized_keys
 
       ssh-keyscan -H node1 >> ~/.ssh/known_hosts
       ssh-keyscan -H node2 >> ~/.ssh/known_hosts
       apt-get update
-      apt-get install -y docker.io
+      ./install_docker.sh
       gpasswd -a vagrant docker
+      sudo systemctl enable docker
       sudo systemctl restart docker
       touch /tmp/ready
     SHELL
